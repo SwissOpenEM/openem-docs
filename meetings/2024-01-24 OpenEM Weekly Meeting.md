@@ -10,9 +10,9 @@ tags: [meeting, openem]
 | ---- | ---- |
 | Spencer Bliven | sbliven |
 | Despina Adamopoulou | despadam |
-| Yves Tittes |  |
-| Philipp Wissmann |  |
-| Attila Nacsa |  |
+| Yves Tittes | ytittes |
+| Philipp Wissmann | phwissmann |
+| Attila Nacsa | consolethinks |
 | Matt Baker |  |
 
 
@@ -20,10 +20,11 @@ tags: [meeting, openem]
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | Spencer | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Despina | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Philipp | ✅ |  | Applied | ✅ |  |  | ✅ |  |  |  |
-| Yves | ✅ |  | Applied | ✅ | ~ |  | ✅ |  |  |  |
+| Philipp | ✅ |  | ✅ | ✅ |  |  | ✅ |  | ~ | ~ |
+| Yves | ✅ |  | ✅ | ✅ | ~ |  | ✅ |  |  |  |
 | Attila | ✅ |  | ✅ | ✅ |  |  | ✅ |  | ✅ | ✅ |
 | Sofya |  |  |  |  |  |  |  |  |  |  |
+| Andy |  |  |  |  |✅  |  |  |  |  |  |
 | Matt Baker | ✅ |  | ✅ | ✅ |  |  | ✅ |  |  |  |
 | Andrzej Rzepiela | ✅ |  | ✅ | ✅ |  |  | ✅ |  |  |  |
 | Daniel Böhringer | ✅ |  | ✅ | ✅ |  |  |  |  |  |  |
@@ -52,5 +53,40 @@ tags: [meeting, openem]
     - PSI is discussing the exact location for external projects like ours
     - External accounts are being tested. SSO works, but invitation to spaces seem not to
 
+### Despina
+
+- Job controller compiling!
+  - Issue with ENOENT error
+- Scheduled meeting with PREMISE (Giovanni Pizzi ORD project) for EM standards (battery application)
+  - Invite Yves
+
+### Yves
+
+- Information on metadata required by Engel group for ET
+- Script for extracting metadata from SerialEM. Updating other script for Thermo-Fischer (EPU)
+- Meeting Bern about TF instruments
+
+### Attila
+
+- Doing test ingestion with SciCat
+  - pyscicat docs need updating
+  - Schema error: validate against https://scicatproject.github.io/SciCatEditor/
+- How to associate files with SciCat owners
+  - Does any facility have a User Managment System?
+    - Yves: Basel splits commercial/academic
+    - Spencer: None at PSI
+    - Andy: Open to User Managment Service
+    - Need to communicate this to facility managers since it has potential user impact
+  - Possible implementations
+    - Website where users can mark datasets as ready for ingestion
+    - Beamline managers are responsible for marking data as ready
+
+### Philipp
+
+- Met ScopeM
+  - Web interface (user management overlap)
+- Evaluating intermediate storage technologies
+- 
+
 # Action Items
-- [ ] 
+- [ ] Describe PSI cluster access & ingestion
