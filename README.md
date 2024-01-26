@@ -4,4 +4,5 @@ This is a repo to allow us to share meeting minutes, notes, and design documents
 
 ## Meetings
 
+- [[2024-01-18 OpenEM Weekly Meeting]]
 - [[2024-01-24 OpenEM Weekly Meeting]]
