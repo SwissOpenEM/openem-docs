@@ -24,7 +24,7 @@ tags: [meeting, openem]
 | Yves | ✅ |  | ✅ | ✅ | ~ |  | ✅ |  |  |  |
 | Attila | ✅ |  | ✅ | ✅ |  |  | ✅ |  | ✅ | ✅ |
 | Sofya |  |  |  |  |  |  |  |  |  |  |
-| Andy |  |  |  |  |✅  |  |  |  |  |  |
+| Andy Howe |  |  |  |  |✅  |  |  |  |  |  |
 | Matt Baker | ✅ |  | ✅ | ✅ |  |  | ✅ |  |  |  |
 | Andrzej Rzepiela | ✅ |  | ✅ | ✅ |  |  | ✅ |  |  |  |
 | Daniel Böhringer | ✅ |  | ✅ | ✅ |  |  |  |  |  |  |
