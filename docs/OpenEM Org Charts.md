@@ -1,8 +1,56 @@
-# Key 
+# Project Organization
+```plantuml
+@startwbs 
+<style> 
+node {
+    HorizontalAlignment center
+}
+wbsDiagram {
+  .newpos {
+      FontColor red
+      FontStyle bold
+  }
+}
+</style>
+
++ OpenEM
+++ PSI
++++_ //Vladimir Korkov//
++++_ **Spencer Bliven**
+++ EMPA
++++_ //Rolf Erni//
++++_ **Despina Adamopoulou**
+++ UNIBA
++++_ //Timm Maier//
++++_ **Yves Tittes**
+++ ETHZ
++++_ //Nicolas Blanc//
++++_ **Philipp Wissmann**
+++ UNIGE
++++_ //Robbie Loewith//
++++_ **Attila Nacsa**
+++ EPFL
++++_ //Henning Stahlberg
++++_ **Sofya Laskina**\n(Late Feb)
+++ UNIBE
++++_ //Benoît Zuber//
++++_ **Contractor**\n(TBD)
+
+
+
+legend
+Key
+----
+**Core Team**: funded by OpenEM
+//Steering Committee// member
+endlegend
+@endwbs
+
+```
+# Key
 **Core Team**: funded by OpenEM
 *Active Participant*: Co-authors and active collaborators
 Participant: Line managers and passive collaborators
-
 # PSI
 ```plantuml
 @startwbs 
@@ -152,7 +200,7 @@ Participant: Line managers and passive collaborators
 endlegend
 @endwbs
 ```
-- [X] Checked by Andrzej
+
 
 # UNIBAS
 ```plantuml-svg
