@@ -27,7 +27,7 @@ Disadvantages:
 
 ## Direct Data Upload (Variation 2) - Direct user upload to local cache
 ![Direct data upload Architecture](images/DirectDataUploadVar2.drawio.png)
-This variation is the alternative, and possibly the other default choice for unis without their own LTS solution.
+This variation removes the usage of the microscope’s storage server and expects the user to posses the data on their own workstation.
 
 Ingestion steps:
 1. The user selects the dataset(s) they want to ingest
@@ -53,7 +53,7 @@ Disadvantages:
 
 ## Direct Data Upload (Variation 3) - Direct user upload to remote cache
 ![Direct data upload Architecture](images/DirectDataUploadVar3.drawio.png)
-This variation is the alternative, and possibly the other default choice for unis without their own LTS solution.
+This variation minimises maintenance tasks for and responsiblities put on participating universities by adding all necessary changes for data transfer to PSI. This would involve a potential web service being created that would be able to receive a dataset from an external user and do the ingestion job by itself.
 
 Ingestion steps:
 1. The user selects the dataset(s) they want to ingest
