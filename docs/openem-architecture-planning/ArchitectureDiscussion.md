@@ -1,7 +1,7 @@
 # Data Transfer Architecture Planning
 ## Direct Data Upload (Variation 1) - Direct access to central storage
-![Direct data upload Architecture](DirectDataUploadVar1.drawio.png)
-This option is the one proposed by default to all universities which do not plan on having their own archival storage system. 
+![Direct data upload Architecture](images/DirectDataUploadVar1.drawio.png)
+A fast option for delivering data to PSI with data transfers being queued up and minimised data transfers on the local site.
 
 Ingestion steps:
 1. The user selects the dataset(s) they want to ingest
@@ -17,15 +17,16 @@ Advantages:
  - Least amount of responsibility on institution side
  - Generally simple
  - Uses the most amount of pre-existing resources
+ - Minimises the need for moving data around locally thus speeding up the overall process
 
 Disadvantages:
  - Puts most of the responsiblity on PSI (single point of failure?)
  - Additional file transfer between local site and PSI before data can be archived/retrieved
  - Slowest method when archiving or retrieving datasets
- - Two phases of external communication of data makes this model the least secure in theory. The impact is not overly significant however
+ - Two phases of over-the-internet communication (less safe, slower)
 
-## Direct Data Upload (Variation 2) - Direct user upload
-![Direct data upload Architecture](DirectDataUploadVar2.drawio.png)
+## Direct Data Upload (Variation 2) - Direct user upload to local cache
+![Direct data upload Architecture](images/DirectDataUploadVar2.drawio.png)
 This variation is the alternative, and possibly the other default choice for unis without their own LTS solution.
 
 Ingestion steps:
@@ -48,10 +49,37 @@ Disadvantages:
  - Additional data movements makes archival slower:
    - microscope storage -> workstation
    - workstation -> cache server
+ - Two phases of over-the-internet communication (less safe, slower)
+
+## Direct Data Upload (Variation 3) - Direct user upload to remote cache
+![Direct data upload Architecture](images/DirectDataUploadVar3.drawio.png)
+This variation is the alternative, and possibly the other default choice for unis without their own LTS solution.
+
+Ingestion steps:
+1. The user selects the dataset(s) they want to ingest
+2. The user fills out the necessary information about each dataset (owner, principal investigator, access groups etc.)
+3. The user then uploads the datasets to PSI's cache through the webservice 
+4. The webservice will extract the necessary metadata. Then, with the information from the user, dataset entries are created on the PSI SciCat instance using REST API calls.
+5. At some point, when certain conditions are met (some time has elapsed, user requests archival), the data gets transfered to the archival site where it'll get archived on tape storage
+
+Advantages:
+ - Simple for facilities
+ - Doesn't require any infrastructure investment from external universities
+ - Protects the main data collection point better (no direct access to it from the webservice)
+ - Minimises responsiblity for universities
+
+Disadvantages:
+ - All the responsibility goes to PSI
+ - Requires long data up-/download sessions to PSI (should be able to continue at a later date though)
+ - Additional data movements makes archival slower:
+   - microscope storage -> workstation
+   - workstation -> remote cache location
+ - Limits data transfers to working hours, creating a very uneven distribution of network usage periods
+ - Can cause headaches to users if the UX is not handled properly (accidentally never finishing the transfer, for example)
 
 
 ## On-Site Cache (Variation 1) - Hybrid Solution
-![On-Site Cache Architecture (Variation 1)](OnSiteCacheVar1.drawio.png)
+![On-Site Cache Architecture (Variation 1)](images/OnSiteCacheVar1.drawio.png)
 Here, the data cache is maintained as part of the local university system, while the tape storage is still a remote location. 
 
 Ingestion steps:
@@ -71,11 +99,11 @@ Advantages:
 
 Disadvantages:
  - More investment/expenses required than the direct data upload approach
- - External transfer of data makes this model less secure
- - Requires interaction with two sites from the institution side ()
+ - External transfer of data makes this model less secure (than the following one)
+ - Requires interaction with two sites from the institution side (PSI, archival site)
 
 ## On-Site Cache (Variation 2) - Fully Independent Archival
-![On-Site Cache Architecture (Variation 2)](OnSiteCacheVar2.drawio.png)
+![On-Site Cache Architecture (Variation 2)](images/OnSiteCacheVar2.drawio.png)
 The institution implements its own archival solution entirely and only the SciCat instance of PSI is used.
 
 Ingestion steps:
