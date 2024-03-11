@@ -1,15 +1,20 @@
 # Project Organization
+
 ```plantuml
 @startwbs 
 <style> 
 node {
     HorizontalAlignment center
+    BackGroundColor #AFDAFF
 }
 wbsDiagram {
   .newpos {
       FontColor red
       FontStyle bold
   }
+}
+legend {
+    BackGroundColor #AFDAFF
 }
 </style>
 
@@ -30,11 +35,11 @@ wbsDiagram {
 +++_ //Robbie Loewith//
 +++_ **Attila Nacsa**
 ++ EPFL
-+++_ //Henning Stahlberg
-+++_ **Sofya Laskina**\n(Late Feb)
++++_ //Henning Stahlberg//
++++_ **Sofya Laskina**
 ++ UNIBE
 +++_ //Benoît Zuber//
-+++_ **Contractor**\n(TBD)
++++_ **Contractors**
 
 
 
@@ -47,6 +52,7 @@ endlegend
 @endwbs
 
 ```
+
 # Key
 **Core Team**: funded by OpenEM
 *Active Participant*: Co-authors and active collaborators
