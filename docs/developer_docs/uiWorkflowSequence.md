@@ -1,9 +1,22 @@
 # Ingestion Sequence
 
-* Participants
-* Expected sequence
-* Endpoints
-* Data
+### Participants
+* Scicat Backend (Service)
+* Ingestor UI (Web-Frontend)
+* Ingestor Backend (Service)
+* Metadata Extractor (Executable)
+
+### Endpoints ###
+* See API-speficiation
+
+### Data
+* Extractor-Information: (Defines Method, Extractor, Schema per Extractor)
+* userMetadata: Metadata which is entered manually by the user
+* extractorMetadata: Metadata which is automatically extracted by the Metadata Extractor
+* mergedMetadata: Combined Metadata of userMetadata and extractorMetadata
+* Dataset: filePath of the Dataset
+
+### Ingestion-Flow
 
 ```mermaid
 sequenceDiagram
@@ -11,6 +24,7 @@ sequenceDiagram
   participant U as Ingestor UI 
   participant B as Ingestor Backend 
   participant M as Metadata Extractor
+    B ->> B: On service startup: Initialize, validate and install extractors 
     S -->> U: Serve Ingestor UI
     activate U
     U ->> B: Establish Connection: GET /version
@@ -22,7 +36,6 @@ sequenceDiagram
     U ->> B: Get Available Extractors, Methods and Schemas: GET /extractor
     deactivate U
     activate B
-    B ->> B: Read config list of available extractors
     B -->> U: return [] extractorName, method, schema
     deactivate B
     activate U
@@ -34,15 +47,15 @@ sequenceDiagram
     deactivate B
 
     activate U
-    U ->> B: Extract Metadata: POST /extractor {filePath, extractorName}
+    U ->> B: Extract extractorMetadata: POST /extractor {filePath, extractorName}
     deactivate U
     activate B
     B -->> M: Invoke Extractor
     activate M
     B -->> U: return extractionJobId
     activate U
-    U ->> U: Add user metadata and confirm
-    M ->> M: write metadata.json
+    U ->> U: User enters userMetadata and confirm
+    M ->> M: write metadata via stdout
     M -->> B: return status code
     deactivate M
     deactivate B
@@ -54,7 +67,7 @@ sequenceDiagram
         deactivate U
         activate B
         B ->> B: Read extraction status file
-        B -->> U: return progress (int 0-100)
+        B -->> U: return {progress (int 0-100), metadata if 100}
         deactivate B
         activate U
         
@@ -67,16 +80,16 @@ sequenceDiagram
     end
 
     activate U
-    U ->> B: Merge metadata: POST /metadata {userMetadata}
+    U ->> U: User checks and edit extractorMetadata
+    U ->> B: Merge metadata: POST /metadata {userMetadata, extractorMetadata}
     deactivate U
     activate B
-    B -->> U: return merged metadata
+    B -->> U: return mergedMetadata
     deactivate B
     activate U
-    U ->> U: User checks and edit metadata
-    U ->> U: Display merged metadata and confirm
+    U ->> U: Display mergedMetadata and confirm
     deactivate U
-    U ->> B: Start ingestion: POST /transfer {metadata}
+    U ->> B: Start ingestion: POST /transfer {mergedMetadata}
     activate B
     B -->> U: return ingestionId
     deactivate B
