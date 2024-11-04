@@ -24,7 +24,7 @@ sequenceDiagram
   participant U as Ingestor UI 
   participant B as Ingestor Backend 
   participant M as Metadata Extractor
-    B ->> B: On service startup: Initialize, validate and install extractors 
+    B ->> B: On service startup: Initialize, validate and install extractors (config.yml)
     S -->> U: Serve Ingestor UI
     activate U
     U ->> B: Establish Connection: GET /version
@@ -33,54 +33,43 @@ sequenceDiagram
     B -->> U: return version
     deactivate B
     activate U
-    U ->> B: Get Available Extractors, Methods and Schemas: GET /extractor
+    U ->> B: Do health check: GET /health
     deactivate U
     activate B
-    B -->> U: return [] extractorName, method, schema
+    B -->> U: return health status
+    deactivate B
+    activate U
+    U ->> B: Get Available Extractors, Methods and Schemas(? -> verify): GET /extractor
+    deactivate U
+    activate B
+    B -->> U: return [] extractorName, method, schema (? -> verify)
     deactivate B
     activate U
     U ->> U: User selects Method
     U ->> B: Get Folder List: GET /dataset
     deactivate U
     activate B
-    B -->> U: return folders
+    B -->> U: return datasets
     deactivate B
 
     activate U
-    U ->> B: Extract extractorMetadata: POST /extractor {filePath, extractorName}
-    deactivate U
+    U -->> B: Extract extractorMetadata: POST /extractor {filePath, extractorName} // SUBSCRIBE Modell
     activate B
     B -->> M: Invoke Extractor
     activate M
-    B -->> U: return extractionJobId
-    activate U
     U ->> U: User enters userMetadata and confirm
-    M ->> M: write metadata via stdout
+    B -->> U: return status
+    M ->> M: write metadata to file
     M -->> B: return status code
+    U ->> U: Wait for final metadata result
+    B -->> U: return metadata
     deactivate M
     deactivate B
     deactivate U
 
-    loop Wait for Automatic Metadata Extraction
-        activate U
-        U ->> B: Ask for state: GET /extractor {extractionJobId}
-        deactivate U
-        activate B
-        B ->> B: Read extraction status file
-        B -->> U: return {progress (int 0-100), metadata if 100}
-        deactivate B
-        activate U
-        
-        alt Extraction complete
-            U ->> U: break
-        else Extraction incomplete
-            U ->> U: Update progress-bar and continue
-        end
-        deactivate U
-    end
-
     activate U
     U ->> U: User checks and edit extractorMetadata
+    U ->> U: TODO: clarify if syntactic or semantic merge -> then decide where to do that
     U ->> B: Merge metadata: POST /metadata {userMetadata, extractorMetadata}
     deactivate U
     activate B
