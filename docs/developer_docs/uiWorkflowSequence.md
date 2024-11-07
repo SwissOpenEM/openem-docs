@@ -59,6 +59,8 @@ sequenceDiagram
     activate M
     U ->> U: User enters userMetadata and confirm
     B -->> U: return status
+    M -->> B: Send progress via stdout / stderr
+    B -->> U: Send update via subscription
     M ->> M: write metadata to file
     M -->> B: return status code
     U ->> U: Wait for final metadata result
