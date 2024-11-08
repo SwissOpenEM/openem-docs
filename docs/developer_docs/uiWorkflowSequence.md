@@ -63,24 +63,18 @@ sequenceDiagram
     B -->> U: Send update via subscription
     M ->> M: write metadata to file
     M -->> B: return status code
+    deactivate M
     U ->> U: Wait for final metadata result
     B -->> U: return metadata
-    deactivate M
     deactivate B
     deactivate U
 
     activate U
     U ->> U: User checks and edit extractorMetadata
-    U ->> U: TODO: clarify if syntactic or semantic merge -> then decide where to do that
-    U ->> B: Merge metadata: POST /metadata {userMetadata, extractorMetadata}
-    deactivate U
-    activate B
-    B -->> U: return mergedMetadata
-    deactivate B
-    activate U
+    U ->> U: Merge metadata
     U ->> U: Display mergedMetadata and confirm
-    deactivate U
     U ->> B: Start ingestion: POST /transfer {mergedMetadata}
+    deactivate U
     activate B
     B -->> U: return ingestionId
     deactivate B
