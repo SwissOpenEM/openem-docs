@@ -1,28 +1,31 @@
 # Ingestion Sequence
 
 ### Participants
-* Scicat Backend (Service)
-* Ingestor UI (Web-Frontend)
-* Ingestor Backend (Service)
-* Metadata Extractor (Executable)
 
-### Endpoints ###
-* See API-speficiation
+-   Scicat Backend (Service)
+-   Ingestor UI (Web-Frontend)
+-   Ingestor Backend (Service)
+-   Metadata Extractor (Executable)
+
+### Endpoints
+
+-   See API-speficiation
 
 ### Data
-* Extractor-Information: (Defines Method, Extractor, Schema per Extractor)
-* userMetadata: Metadata which is entered manually by the user
-* extractorMetadata: Metadata which is automatically extracted by the Metadata Extractor
-* mergedMetadata: Combined Metadata of userMetadata and extractorMetadata
-* Dataset: filePath of the Dataset
+
+-   Extractor-Information: (Defines Method, Extractor, Schema per Extractor)
+-   userMetadata: Metadata which is entered manually by the user
+-   extractorMetadata: Metadata which is automatically extracted by the Metadata Extractor
+-   mergedMetadata: Combined Metadata of userMetadata and extractorMetadata
+-   Dataset: filePath of the Dataset
 
 ### Ingestion-Flow
 
 ```mermaid
 sequenceDiagram
   participant S as Scicat Backend
-  participant U as Ingestor UI 
-  participant B as Ingestor Backend 
+  participant U as Ingestor UI
+  participant B as Ingestor Backend
   participant M as Metadata Extractor
     B ->> B: On service startup: Initialize, validate and install extractors (config.yml)
     S -->> U: Serve Ingestor UI
@@ -32,6 +35,21 @@ sequenceDiagram
     activate B
     B -->> U: return version
     deactivate B
+
+    activate U
+    U ->> B: Check for logged in user: GET /userinfo
+    deactivate U
+    activate B
+    B -->> U: return info / error
+    deactivate B
+
+    activate U
+    U ->> B: Login if necessary: POST /login
+    deactivate U
+    activate B
+    B -->> U: return Cookie
+    deactivate B
+
     activate U
     U ->> B: Do health check: GET /health
     deactivate U
@@ -53,7 +71,7 @@ sequenceDiagram
     deactivate B
 
     activate U
-    U -->> B: Extract extractorMetadata: POST /extractor {filePath, extractorName} // SUBSCRIBE Modell
+    U -->> B: Extract extractorMetadata: GET /metadata Param{filePath, extractorName} // SSE 
     activate B
     B -->> M: Invoke Extractor
     activate M
@@ -73,10 +91,10 @@ sequenceDiagram
     U ->> U: User checks and edit extractorMetadata
     U ->> U: Merge metadata
     U ->> U: Display mergedMetadata and confirm
-    U ->> B: Start ingestion: POST /transfer {mergedMetadata}
+    U ->> B: Start ingestion: POST /dataset
     deactivate U
     activate B
-    B -->> U: return ingestionId
+    B -->> U: return transferId
     deactivate B
-    
+
 ```
