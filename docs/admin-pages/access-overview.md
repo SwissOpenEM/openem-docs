@@ -3,8 +3,10 @@
 ### Participants
 * Facilitiy
     * User
+    * Facilitsy Manager
     * EM Data Server
     * Ingestor
+    * Admin-Interface 
 
 * PSI
     * SciCat Backend
@@ -35,10 +37,15 @@ flowchart LR
         %% Entities
         direction TB
         user[User]
+        faManager[Facility Manager]
+        adminInterface[Admin Frontend]
         ingestor[Ingestor]
+        emData[EM Data]
 
         %% Connections
-        emData[EM Data] --> ingestor 
+        emData ---> ingestor 
+        faManager --> adminInterface
+        adminInterface --> ingestor
     end
     subgraph PSI
         %% Entities
@@ -64,31 +71,4 @@ flowchart LR
     ingestor --> dataCache
     ingestor --> keycloak
     dataCache ----> lts
-```
-
-### Overview - Admin Interface
-```mermaid
-flowchart LR
-    subgraph Admin-Interface[SciCat Frontend?]
-        %% Entities
-        direction TB
-        admin[Admin-Interface]
-    end
-    subgraph Facility
-        %% Entities
-        direction TB
-        ingestor[Ingestor]
-
-        %% Connections
-    end
-    subgraph PSI
-        direction TB
-        scicatbackend[SciCat Backend]
-        keycloak[Keycloak IDP]
-    end
-
-    %% Connections (between subentities)
-    admin --> scicatbackend
-    admin --> ingestor
-    admin --> keycloak
 ```
